@@ -9,9 +9,8 @@ import { RouterLink, RouterView } from 'vue-router'
         <img alt="Vue logo" class="logo w-16 h-16" src="@/assets/logo.svg" />
       </RouterLink>
 
-      <nav class="space-x-6 text-lg">
-        <RouterLink to="/add" class="hover:text-indigo-200 transition-colors duration-300">新增記錄</RouterLink>
-        <RouterLink to="/details" class="hover:text-indigo-200 transition-colors duration-300">記錄清單</RouterLink>
+      <nav class="space-x-6 text-xl">
+        <RouterLink to="/add" class="hover:text-indigo-200 transition-colors duration-300">記帳</RouterLink>
       </nav>
     </div>
   </header>

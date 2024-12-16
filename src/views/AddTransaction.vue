@@ -1,10 +1,12 @@
 <template>
-    <section class="p-8 bg-gray-100 min-h-screen flex flex-col items-center">
+  <section class="p-8 bg-gray-100 min-h-screen flex flex-col items-center">
+    <!-- Form Section for Adding Transaction -->
+    <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-md flex flex-col gap-4 mb-8">
       <h1 class="text-2xl font-bold mb-6 text-gray-800">新增記錄</h1>
-  
+
       <form 
         @submit.prevent="addTransaction"
-        class="w-full max-w-md bg-white p-6 rounded-lg shadow-md flex flex-col gap-4"
+        class="flex flex-col gap-4"
       >
         <label class="block">
           <span class="text-gray-700 font-medium">類型：</span>
@@ -16,7 +18,7 @@
             <option value="expense">支出</option>
           </select>
         </label>
-  
+
         <label class="block">
           <span class="text-gray-700 font-medium">金額：</span>
           <input 
@@ -25,7 +27,7 @@
             class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-indigo-300 focus:outline-none"
           />
         </label>
-  
+
         <button 
           type="submit" 
           class="mt-4 px-4 py-2 bg-indigo-500 text-white font-medium rounded-md hover:bg-indigo-600 focus:ring focus:ring-indigo-300 focus:outline-none"
@@ -33,19 +35,48 @@
           新增
         </button>
       </form>
-    </section>
-  </template>
-  
-  <script setup>
-  import { ref } from 'vue';
-  
-  const newTransaction = ref({ type: 'income', amount: 0 });
-  const transactions = ref([]);
-  
-  function addTransaction() {
-    transactions.value.push({ ...newTransaction.value });
-    newTransaction.value = { type: 'income', amount: 0 };
-    alert('記錄已新增！');
-  }
-  </script>
-  
+    </div>
+
+    <!-- Transaction List Section -->
+    <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
+      <h1 class="text-2xl font-bold mb-6 text-gray-800">記錄清單</h1>
+
+      <div class="overflow-x-auto bg-white shadow-lg rounded-lg">
+        <table class="min-w-full table-auto">
+          <thead>
+            <tr class="bg-indigo-600 text-white">
+              <th class="px-6 py-4 text-left">類型</th>
+              <th class="px-6 py-4 text-left">金額</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(t, index) in transactions" :key="index" class="border-b">
+              <td class="px-6 py-4">{{ t.type === 'income' ? '收入' : '支出' }}</td>
+              <td class="px-6 py-4">{{ t.amount }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+
+const newTransaction = ref({ type: 'income', amount: 0 });
+const transactions = ref([
+  { type: 'income', amount: 5000 },
+  { type: 'expense', amount: 2000 },
+]);
+
+function addTransaction() {
+  transactions.value.push({ ...newTransaction.value });
+  newTransaction.value = { type: 'income', amount: 0 };
+  alert('記錄已新增！');
+}
+</script>
+
+<style scoped>
+/* Add any scoped styles here */
+</style>
