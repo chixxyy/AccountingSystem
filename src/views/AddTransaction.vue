@@ -1,6 +1,5 @@
 <template>
   <section class="p-8 bg-gray-100 min-h-screen flex flex-col items-center">
-    <!-- Form Section for Adding Transaction -->
     <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-md flex flex-col gap-4 mb-8">
       <h1 class="text-2xl font-bold mb-6 text-gray-800">新增記錄</h1>
 
@@ -37,7 +36,6 @@
       </form>
     </div>
 
-    <!-- Transaction List Section -->
     <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
       <h1 class="text-2xl font-bold mb-6 text-gray-800">記錄清單</h1>
 
@@ -67,7 +65,7 @@ import { ref } from 'vue';
 const newTransaction = ref({ type: 'income', amount: 0 });
 const transactions = ref([
   { type: 'income', amount: 5000 },
-  { type: 'expense', amount: 2000 },
+  { type: 'expense', amount: 3000 },
 ]);
 
 function addTransaction() {
