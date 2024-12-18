@@ -61,6 +61,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import Swal from 'sweetalert2';
 
 const newTransaction = ref({ type: 'income', amount: 0 });
 const transactions = ref([
@@ -71,10 +72,15 @@ const transactions = ref([
 function addTransaction() {
   transactions.value.push({ ...newTransaction.value });
   newTransaction.value = { type: 'income', amount: 0 };
-  alert('記錄已新增！');
-}
+    Swal.fire({
+    position: "top-end",
+    icon: "success",
+    title: "新增完成",
+    showConfirmButton: true,
+    timer: 1500,
+  });
+  }
 </script>
 
 <style scoped>
-/* Add any scoped styles here */
 </style>

@@ -11,6 +11,7 @@ import { RouterLink, RouterView } from 'vue-router'
 
       <nav class="space-x-6 text-xl">
         <RouterLink to="/add" class="hover:text-indigo-200 transition-colors duration-300">記帳</RouterLink>
+        <RouterLink to="/invest" class="hover:text-indigo-200 transition-colors duration-300">投資</RouterLink>
       </nav>
     </div>
   </header>
