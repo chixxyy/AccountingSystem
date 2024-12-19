@@ -2,6 +2,8 @@
 
 一個提供簡易的記帳投資頁面，持續優化中。
 
+![page](/img1.png)
+
 ## 推薦的 IDE 設置
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (並禁用 Vetur)。
