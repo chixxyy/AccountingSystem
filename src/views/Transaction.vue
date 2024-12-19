@@ -1,12 +1,9 @@
 <template>
-  <section class="p-8 bg-gray-100 min-h-screen flex flex-col items-center">
-    <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-md flex flex-col gap-4 mb-8">
-      <h1 class="text-2xl font-bold mb-6 text-gray-800">新增記錄</h1>
+  <section class="dashboard p-6" style="height: 100vh; width: 100vw;">
+    <h1 class="text-2xl font-bold mb-6">新增記錄</h1>
 
-      <form 
-        @submit.prevent="addTransaction"
-        class="flex flex-col gap-4"
-      >
+    <div class="bg-white p-6 rounded-lg shadow-lg max-w-2xl mx-auto mb-8" style="width: 80vw;">
+      <form @submit.prevent="addTransaction" class="flex flex-col gap-4">
         <label class="block">
           <span class="text-gray-700 font-medium">類型：</span>
           <select 
@@ -36,8 +33,22 @@
       </form>
     </div>
 
-    <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
-      <h1 class="text-2xl font-bold mb-6 text-gray-800">記錄清單</h1>
+    <div class="bg-white p-6 rounded-lg shadow-lg max-w-2xl mx-auto mb-8" style="width: 80vw;">
+      <h1 class="text-2xl font-bold mb-6">統計數據</h1>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div class="bg-white p-4 rounded-lg shadow-lg text-center">
+          <h3 class="text-xl font-semibold mb-2">總收入</h3>
+          <p class="text-3xl text-green-500">{{ totalIncome }}</p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-lg text-center">
+          <h3 class="text-xl font-semibold mb-2">總支出</h3>
+          <p class="text-3xl text-red-500">{{ totalExpense }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-lg max-w-2xl mx-auto" style="width: 80vw;">
+      <h1 class="text-2xl font-bold mb-6">記錄清單</h1>
 
       <div class="overflow-x-auto bg-white shadow-lg rounded-lg">
         <table class="min-w-full table-auto">
@@ -60,7 +71,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import Swal from 'sweetalert2';
 
 const newTransaction = ref({ type: 'income', amount: 0 });
@@ -69,18 +80,37 @@ const transactions = ref([
   { type: 'expense', amount: 3000 },
 ]);
 
+const totalIncome = computed(() => {
+  return transactions.value
+    .filter(t => t.type === 'income')
+    .reduce((sum, t) => sum + t.amount, 0);
+});
+
+const totalExpense = computed(() => {
+  return transactions.value
+    .filter(t => t.type === 'expense')
+    .reduce((sum, t) => sum + t.amount, 0);
+});
+
 function addTransaction() {
   transactions.value.push({ ...newTransaction.value });
   newTransaction.value = { type: 'income', amount: 0 };
-    Swal.fire({
+  Swal.fire({
     position: "top-end",
     icon: "success",
     title: "新增完成",
     showConfirmButton: true,
     timer: 1500,
   });
-  }
+}
 </script>
 
 <style scoped>
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
 </style>

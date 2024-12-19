@@ -17,6 +17,11 @@ import { RouterLink, RouterView } from 'vue-router'
   </header>
 
   <RouterView />
+  <footer class="bg-gray-800 text-white p-4 mt-8">
+    <div class="container mx-auto text-center">
+      <p>&copy; 歡迎來到記帳小站<span style="color: red;"><a href="https://github.com/chixxyy">&trade; 聯絡我</a></span></p>
+    </div>
+  </footer>
 </template>
 
 <style scoped>

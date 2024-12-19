@@ -20,75 +20,77 @@
     </div>
 
     <div class="charts bg-white p-6 rounded-lg shadow-lg">
-      <Bar :data="chartData" :options="chartOptions" />
+      <Pie :data="chartData" :options="chartOptions" />
+    </div>
+
+    <div class="charts bg-white p-6 rounded-lg shadow-lg mt-6">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">月份</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">收入</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">支出</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <tr v-for="(data, index) in monthlyData" :key="index">
+            <td class="px-6 py-4 whitespace-nowrap">{{ data.month }}</td>
+            <td class="px-6 py-4 whitespace-nowrap">{{ data.income }}</td>
+            <td class="px-6 py-4 whitespace-nowrap">{{ data.expense }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </section>
 </template>
 
-
 <script setup>
-import { ref, computed } from 'vue';
-import { Bar } from 'vue-chartjs';
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
+import { ref } from 'vue';
+import { Pie } from 'vue-chartjs';
+import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
+ChartJS.register(Title, Tooltip, Legend, ArcElement);
 
-const transactions = ref([
-  { type: 'income', amount: 5000 },
-  { type: 'expense', amount: 2000 },
-  { type: 'expense', amount: 1000 },
-]);
+const totalIncome = ref(50000);
+const totalExpense = ref(30000);
 
-const totalIncome = computed(() =>
-  transactions.value.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0)
-);
-const totalExpense = computed(() =>
-  transactions.value.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0)
-);
-
-const chartData = computed(() => ({
-  labels: ['總收入', '總支出'], // X軸
+const chartData = ref({
+  labels: ['收入', '支出'],
   datasets: [
     {
-      label: '金額',
-      data: [totalIncome.value, totalExpense.value], // Y軸
-      backgroundColor: ['#4CAF50', '#FF6347'], // 顏色
-      borderColor: ['#388E3C', '#D32F2F'],
-      borderWidth: 1,
-    },
-  ],
-}));
+      label: '財務摘要',
+      backgroundColor: ['#42A5F5', '#FF6384'],
+      data: [totalIncome.value, totalExpense.value]
+    }
+  ]
+});
 
-const chartOptions = {
+const chartOptions = ref({
   responsive: true,
+  maintainAspectRatio: false,
   plugins: {
+    legend: {
+      position: 'top'
+    },
     title: {
       display: true,
-      text: '財務圖表',
-    },
-    tooltip: {
-      callbacks: {
-        label: (tooltipItem) => `$${tooltipItem.raw.toLocaleString()}`,
-      },
-    },
-  },
-};
+      text: '收入與支出比例'
+    }
+  }
+});
+
+const monthlyData = ref([
+  { month: '一月', income: 5000, expense: 3000 },
+  { month: '二月', income: 10000, expense: 5000 },
+  { month: '三月', income: 15000, expense: 7000 },
+  { month: '四月', income: 20000, expense: 10000 },
+  { month: '五月', income: 25000, expense: 12000 },
+  { month: '六月', income: 30000, expense: 15000 },
+  { month: '七月', income: 35000, expense: 18000 },
+  { month: '八月', income: 40000, expense: 20000 },
+  { month: '九月', income: 45000, expense: 25000 },
+  { month: '十月', income: 50000, expense: 30000 },
+  { month: '十一月', income: 55000, expense: 35000 },
+  { month: '十二月', income: 60000, expense: 40000 },
+]);
 </script>
-
-
-<style scoped>
-.dashboard {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.summary {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1rem;
-}
-
-.charts {
-  margin-top: 2rem;
-}
-</style>
